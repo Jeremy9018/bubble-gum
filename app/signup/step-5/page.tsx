@@ -79,108 +79,40 @@ export default function Step5Page() {
     label: date.label
   }));
 
-  const isValid = step5Data.name.trim().length >= 2 && 
-                 step5Data.email.trim().length > 0 &&
-                 step5Data.preferredDate.trim().length > 0 &&
-                 step5Data.preferredTimeSlot.trim().length > 0 &&
+  const isValid = step5Data.preferredDate && step5Data.preferredDate.trim().length > 0 &&
+                 step5Data.preferredTimeSlot && step5Data.preferredTimeSlot.trim().length > 0 &&
                  Object.keys(errors).length === 0;
 
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-8 text-center">
         <h1 className="mb-4 text-3xl font-bold text-gray-900">
-          Almost done! Where should we send your report?
+          Almost done! Let&apos;s schedule your results review
         </h1>
         <p className="text-lg text-gray-600">
-          Your GEO analysis will be ready within 24 hours.
+          Schedule a meeting with our GEO expert and optionally let us know how you found us.
         </p>
       </div>
 
       <div className="space-y-6">
-        {/* Required Fields */}
-        <div className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Input
-              label="First Name"
-              type="text"
-              value={step5Data.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
-              placeholder="John"
-              error={errors.name}
-              required
-              icon={
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              }
-            />
-
-            <Input
-              label="Email Address"
-              type="email"
-              value={step5Data.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              placeholder="john@company.com"
-              error={errors.email}
-              helperText="We'll send your report here"
-              required
-              icon={
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              }
-            />
-          </div>
-        </div>
-
-        {/* Optional Fields Section */}
-        <div className="border-t border-gray-200 pt-6">
+        {/* Optional Referral Source */}
+        <div>
           <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Help us personalize your report (optional)
+              How did you hear about us? (optional)
             </h3>
             <p className="text-sm text-gray-600">
-              This information helps us provide more relevant insights and recommendations.
+              This helps us understand how to better reach businesses like yours.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Input
-                label="Company"
-                type="text"
-                value={step5Data.company || ''}
-                onChange={(e) => handleInputChange('company', e.target.value)}
-                placeholder="Your Company Inc."
-                icon={
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-2m-2 0H7m5 0v-5a2 2 0 00-2-2H8a2 2 0 00-2 2v5m5 0h4" />
-                  </svg>
-                }
-              />
-
-              <Input
-                label="Position"
-                type="text"
-                value={step5Data.position || ''}
-                onChange={(e) => handleInputChange('position', e.target.value)}
-                placeholder="e.g., Marketing Manager, CEO"
-                icon={
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m8 6V9a2 2 0 00-2-2H8a2 2 0 00-2 2v3.093l8-3.093z" />
-                  </svg>
-                }
-              />
-            </div>
-
-            <Select
-              label="How did you hear about BubbleShare?"
-              options={referralOptions}
-              value={step5Data.referralSource || ''}
-              onChange={(value) => handleInputChange('referralSource', value)}
-              placeholder="Select source..."
-            />
-          </div>
+          <Select
+            label="Referral Source"
+            options={referralOptions}
+            value={step5Data.referralSource || ''}
+            onChange={(value) => handleInputChange('referralSource', value)}
+            placeholder="Select how you found us..."
+          />
         </div>
 
         {/* Meeting Scheduling Section */}
@@ -226,7 +158,7 @@ export default function Step5Page() {
                 <p className="font-medium mb-1">What to expect:</p>
                 <ul className="space-y-1">
                   <li>• 30-minute video call via Google Meet or Zoom</li>
-                  <li>• Detailed walkthrough of your brand's AI visibility</li>
+                  <li>• Detailed walkthrough of your brand&apos;s AI visibility</li>
                   <li>• Personalized recommendations and action plan</li>
                   <li>• Q&A session about GEO strategy</li>
                 </ul>

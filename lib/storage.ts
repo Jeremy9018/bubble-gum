@@ -44,6 +44,10 @@ export const getInitialFormData = (): FormData => {
       language: stored.step1?.language || '',
     },
     step2: {
+      name: stored.step2?.name || '',
+      company: stored.step2?.company || '',
+      email: stored.step2?.email || '',
+      position: stored.step2?.position || '',
       brandName: stored.step2?.brandName || '',
       website: stored.step2?.website || '',
     },
@@ -54,13 +58,9 @@ export const getInitialFormData = (): FormData => {
       competitors: stored.step4?.competitors || [],
     },
     step5: {
-      name: stored.step5?.name || stored.step4?.name || '',
-      email: stored.step5?.email || stored.step4?.email || '',
-      company: stored.step5?.company || stored.step4?.company || '',
-      position: stored.step5?.position || stored.step4?.position || '',
-      referralSource: stored.step5?.referralSource || stored.step4?.referralSource || '',
-      preferredTimeSlot: stored.step5?.preferredTimeSlot || stored.step4?.preferredTimeSlot || '',
-      preferredDate: stored.step5?.preferredDate || stored.step4?.preferredDate || '',
+      referralSource: stored.step5?.referralSource || '',
+      preferredTimeSlot: stored.step5?.preferredTimeSlot || '',
+      preferredDate: stored.step5?.preferredDate || ''
     },
   };
 };

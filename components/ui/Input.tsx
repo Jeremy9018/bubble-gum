@@ -17,7 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label 
             htmlFor={inputId}
-            className="mb-2 block text-sm font-medium text-gray-700"
+            className="mb-2 block text-sm font-semibold text-gray-700"
           >
             {label}
             {props.required && <span className="ml-1 text-red-500">*</span>}
@@ -26,8 +26,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         
         <div className="relative">
           {icon && (
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <div className="h-5 w-5 text-gray-400">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+              <div className="h-5 w-5 text-purple-900">
                 {icon}
               </div>
             </div>
@@ -35,9 +35,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           
           <input
             className={cn(
-              'flex h-10 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:opacity-50',
-              icon && 'pl-10',
-              error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
+              'flex h-11 w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 hover:border-purple-300 hover:shadow-md focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 disabled:cursor-not-allowed disabled:opacity-50',
+              icon && 'pl-11',
+              error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20 hover:border-red-400',
               className
             )}
             ref={ref}
@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
           
           {error && (
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
               <svg
                 className="h-5 w-5 text-red-500"
                 xmlns="http://www.w3.org/2000/svg"

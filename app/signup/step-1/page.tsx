@@ -99,12 +99,15 @@ export default function Step1Page() {
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
           <div className="mb-4">
-            <svg className="mx-auto h-8 w-8 animate-spin text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
+            <div className="relative">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse mx-auto"></div>
+              <svg className="absolute inset-0 h-8 w-8 animate-spin text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3"></circle>
+                <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
           </div>
-          <p className="text-sm text-gray-600">Detecting your location...</p>
+          <p className="text-sm text-purple-900 font-medium">Detecting your location...</p>
         </div>
       </div>
     );
@@ -113,15 +116,15 @@ export default function Step1Page() {
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-8 text-center">
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">
-          Let's start with your market
+        <h1 className="mb-4 text-3xl font-bold text-purple-900">
+          Let&apos;s start with your market
         </h1>
-        <p className="text-lg text-gray-600">
-          We'll analyze your brand's visibility in AI search results for your target market.
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          We&apos;ll analyze your brand&apos;s visibility in AI search results for your target market.
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div className="grid gap-6 sm:grid-cols-2">
           <Select
             label="Country"
@@ -144,18 +147,22 @@ export default function Step1Page() {
         </div>
 
         {step1Data.country && step1Data.language && (
-          <div className="rounded-lg bg-blue-50 p-4">
+          <div className="rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 p-6 border-2 border-purple-100">
             <div className="flex items-center">
-              <svg className="mr-2 h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-              </svg>
-              <p className="text-sm text-blue-800">
-                We'll analyze your brand's AI search performance in{' '}
-                <span className="font-semibold">
+              <div className="mr-3 flex-shrink-0">
+                <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                  <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-sm text-purple-800 font-medium leading-relaxed">
+                We&apos;ll analyze your brand&apos;s AI search performance in{' '}
+                <span className="font-bold text-purple-900">
                   {COUNTRIES.find(c => c.code === step1Data.country)?.name}
                 </span>{' '}
                 using{' '}
-                <span className="font-semibold">
+                <span className="font-bold text-purple-900">
                   {LANGUAGES.find(l => l.code === step1Data.language)?.name}
                 </span>{' '}
                 language.

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormContext } from '@/contexts/FormContext';
 import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import { THEMES } from '@/lib/constants';
 import { validateStep3 } from '@/lib/validations';
@@ -16,6 +17,7 @@ export default function Step3Page() {
   
   const step3Data = formData.step3;
   const selectedThemes = step3Data.selectedThemes || [];
+  const customTheme = step3Data.customTheme || { name: '', description: '' };
 
   const handleThemeSelect = (themeId: string) => {
     let newSelectedThemes: string[];
@@ -28,9 +30,29 @@ export default function Step3Page() {
       newSelectedThemes = [themeId];
     }
     
-    updateFormData('step3', { selectedThemes: newSelectedThemes });
+    // Clear custom theme when selecting a predefined theme
+    updateFormData('step3', { 
+      selectedThemes: newSelectedThemes,
+      customTheme: { name: '', description: '' }
+    });
     
-    // Clear error if it exists
+    // Clear errors if they exist
+    setErrors(prev => ({ ...prev, selectedThemes: '', customThemeName: '', customThemeDescription: '' }));
+  };
+
+  const handleCustomThemeChange = (field: 'name' | 'description', value: string) => {
+    const newCustomTheme = { ...customTheme, [field]: value };
+    
+    // Clear selected themes when user starts typing custom theme
+    updateFormData('step3', {
+      selectedThemes: value.trim() ? [] : selectedThemes,
+      customTheme: newCustomTheme
+    });
+    
+    // Clear errors if they exist
+    if (errors[`customTheme${field.charAt(0).toUpperCase() + field.slice(1)}`]) {
+      setErrors(prev => ({ ...prev, [`customTheme${field.charAt(0).toUpperCase() + field.slice(1)}`]: '' }));
+    }
     if (errors.selectedThemes) {
       setErrors(prev => ({ ...prev, selectedThemes: '' }));
     }
@@ -59,26 +81,35 @@ export default function Step3Page() {
   return (
     <div className="mx-auto max-w-4xl">
       <div className="mb-8 text-center">
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">
+        <h1 className="mb-4 text-3xl font-bold text-purple-900">
           What aspect matters most to your brand?
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
           Choose one theme to focus your GEO analysis. This helps us provide more targeted insights.
         </p>
       </div>
 
       {/* Selection Counter */}
-      <div className="mb-6 flex items-center justify-between rounded-lg bg-blue-50 p-4">
+      <div className="mb-6 flex items-center justify-between rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 p-5 border-2 border-purple-100">
         <div className="flex items-center text-sm">
-          <svg className="mr-2 h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span className="text-blue-800">
-            {selectedThemes.length === 0 ? 'Select one theme' : <><strong>1</strong> theme selected</>}
+          <div className="mr-3 h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+            <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span className="text-purple-800 font-medium">
+            {selectedThemes.length === 0 && (!customTheme.name?.trim() || !customTheme.description?.trim()) 
+              ? 'Select one theme or create a custom theme' 
+              : selectedThemes.length === 1 
+                ? <><strong>1</strong> theme selected</>
+                : customTheme.name?.trim() && customTheme.description?.trim()
+                  ? <><strong>1</strong> custom theme created</>
+                  : 'Select one theme or create a custom theme'
+            }
           </span>
         </div>
-        {selectedThemes.length === 1 && (
-          <span className="text-xs font-medium text-blue-700 bg-blue-100 px-2 py-1 rounded-full">
+        {(selectedThemes.length === 1 || (customTheme.name?.trim() && customTheme.description?.trim())) && (
+          <span className="text-xs font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 px-3 py-1.5 rounded-full shadow-sm">
             ✓ Selected
           </span>
         )}
@@ -108,37 +139,33 @@ export default function Step3Page() {
               selectable={true}
               onSelect={() => handleThemeSelect(theme.id)}
               className={cn(
-                'transition-all duration-200',
-                isSelected && 'ring-2 ring-blue-500 border-blue-500 bg-blue-50',
-                !isSelected && 'hover:border-gray-400 hover:shadow-md'
+                'transition-all duration-300 transform hover:scale-[1.02]',
+                isSelected && 'ring-2 ring-purple-500 border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg',
+                !isSelected && 'hover:border-purple-300 hover:shadow-lg border-2'
               )}
             >
               <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className={cn(
-                    'flex h-12 w-12 items-center justify-center rounded-lg',
-                    isSelected ? 'bg-blue-100' : theme.color
-                  )}>
-                    <span className="text-2xl">{theme.icon}</span>
-                  </div>
+                <div className="flex items-center justify-end">
                   {isSelected && (
-                    <svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                    <div className="h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                      <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
                   )}
                 </div>
               </CardHeader>
               
               <CardContent className="pt-0">
                 <CardTitle className={cn(
-                  'mb-2 text-lg',
-                  isSelected ? 'text-blue-900' : 'text-gray-900'
+                  'mb-2 text-lg font-semibold',
+                  isSelected ? 'text-purple-900' : 'text-gray-900'
                 )}>
                   {theme.name}
                 </CardTitle>
                 <CardDescription className={cn(
-                  'text-sm',
-                  isSelected ? 'text-blue-700' : 'text-gray-600'
+                  'text-sm leading-relaxed',
+                  isSelected ? 'text-purple-700' : 'text-gray-600'
                 )}>
                   {theme.description}
                 </CardDescription>
@@ -148,27 +175,104 @@ export default function Step3Page() {
         })}
       </div>
 
+      {/* Custom Theme Section */}
+      <div className="mb-8">
+        <div className="mb-4 flex items-center">
+          <div className="flex-1 border-t border-gray-300"></div>
+          <div className="mx-4 text-sm text-gray-500 font-medium">OR</div>
+          <div className="flex-1 border-t border-gray-300"></div>
+        </div>
+        
+        <Card className={cn(
+          'transition-all duration-300 border-2',
+          (customTheme.name?.trim() || customTheme.description?.trim()) && 'ring-2 ring-purple-500 border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50',
+          !(customTheme.name?.trim() || customTheme.description?.trim()) && 'hover:border-purple-300 hover:shadow-lg'
+        )}>
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center text-lg font-semibold">
+              <div className="mr-3 h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+              </div>
+              Create Your Own Theme
+            </CardTitle>
+            <CardDescription>
+              Define a custom theme that&apos;s specific to your brand&apos;s focus
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent className="space-y-4">
+            <Input
+              label="Theme Name"
+              placeholder="e.g., Sustainable Fashion, Tech Innovation"
+              value={customTheme.name}
+              onChange={(e) => handleCustomThemeChange('name', e.target.value)}
+              error={errors.customThemeName}
+            />
+            
+            <div className="w-full">
+              <label className="mb-2 block text-sm font-semibold text-gray-700">
+                Theme Description
+              </label>
+              <textarea
+                className={cn(
+                  'flex min-h-[100px] w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm shadow-sm transition-all duration-200 placeholder:text-gray-500 hover:border-purple-300 hover:shadow-md focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20 disabled:cursor-not-allowed disabled:opacity-50',
+                  errors.customThemeDescription && 'border-red-500 focus:border-red-500 focus:ring-red-500/20 hover:border-red-400'
+                )}
+                placeholder="Describe what this theme covers and why it's important to your brand..."
+                value={customTheme.description}
+                onChange={(e) => handleCustomThemeChange('description', e.target.value)}
+              />
+              {errors.customThemeDescription && (
+                <p className="mt-2 text-sm text-red-600">
+                  {errors.customThemeDescription}
+                </p>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Selected Theme Preview */}
-      {selectedThemes.length > 0 && (
-        <div className="mb-6 rounded-lg bg-green-50 p-4">
+      {(selectedThemes.length > 0 || (customTheme.name?.trim() && customTheme.description?.trim())) && (
+        <div className="mb-6 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 p-6 border-2 border-purple-100">
           <div className="flex items-start">
-            <svg className="mr-2 mt-0.5 h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
+            <div className="mr-3 flex-shrink-0">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
             <div>
-              <p className="text-sm font-medium text-green-800 mb-1">
+              <p className="text-sm font-semibold text-purple-800 mb-3">
                 Your GEO report will focus on:
               </p>
               <div className="flex flex-wrap gap-2">
                 {selectedThemes.map(themeId => {
                   const theme = THEMES.find(t => t.id === themeId);
                   return (
-                    <span key={themeId} className="inline-flex items-center bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full">
-                      <span className="mr-2">{theme?.icon}</span>
+                    <span key={themeId} className="inline-flex items-center bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 text-sm font-semibold px-4 py-2 rounded-full border border-purple-200 shadow-sm">
                       {theme?.name}
                     </span>
                   );
                 })}
+                {customTheme.name?.trim() && customTheme.description?.trim() && (
+                  <div className="w-full">
+                    <span className="inline-flex items-center bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 text-sm font-semibold px-4 py-2 rounded-full border border-purple-200 shadow-sm mb-3">
+                      <div className="mr-2 h-4 w-4 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                        <svg className="h-2 w-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={4} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      </div>
+                      {customTheme.name}
+                    </span>
+                    <p className="text-xs text-purple-700 mt-1 ml-1 leading-relaxed">
+                      {customTheme.description}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -187,7 +291,7 @@ export default function Step3Page() {
         <Button 
           onClick={handleNext} 
           size="lg"
-          disabled={selectedThemes.length === 0}
+          disabled={selectedThemes.length === 0 && (!customTheme.name?.trim() || !customTheme.description?.trim())}
         >
           Continue
           <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

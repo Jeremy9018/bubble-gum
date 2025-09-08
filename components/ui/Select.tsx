@@ -94,7 +94,7 @@ const Select: React.FC<SelectProps> = ({
       <div ref={selectRef} className="relative">
         <div
           className={cn(
-            'flex h-10 w-full cursor-pointer items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20',
+            'flex h-11 w-full cursor-pointer items-center justify-between rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-sm shadow-sm transition-all duration-200 hover:border-purple-300 hover:shadow-md focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20',
             error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
             disabled && 'cursor-not-allowed opacity-50',
             className
@@ -105,6 +105,7 @@ const Select: React.FC<SelectProps> = ({
           role="combobox"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
+          aria-controls="select-options"
         >
           <div className="flex items-center truncate">
             {selectedOption?.icon && (
@@ -137,13 +138,13 @@ const Select: React.FC<SelectProps> = ({
         </div>
 
         {isOpen && (
-          <div className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg">
+          <div id="select-options" className="absolute z-50 mt-2 max-h-60 w-full overflow-auto rounded-xl border-2 border-gray-200 bg-white py-2 shadow-xl shadow-gray-200/50" role="listbox">
             {searchable && (
               <div className="px-2 py-2">
                 <input
                   ref={searchRef}
                   type="text"
-                  className="h-8 w-full rounded border border-gray-300 px-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="h-8 w-full rounded-lg border-2 border-gray-200 px-3 text-sm transition-all duration-200 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
                   placeholder="Search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
@@ -161,8 +162,8 @@ const Select: React.FC<SelectProps> = ({
                 <div
                   key={option.value}
                   className={cn(
-                    'flex cursor-pointer items-center px-3 py-2 text-sm hover:bg-gray-100',
-                    value === option.value && 'bg-blue-50 text-blue-600'
+                    'flex cursor-pointer items-center px-4 py-3 text-sm transition-colors duration-150 hover:bg-purple-50 hover:text-purple-700',
+                    value === option.value && 'bg-gradient-to-r from-purple-50 to-pink-50 text-purple-900 font-medium'
                   )}
                   onClick={() => handleSelect(option.value)}
                   role="option"

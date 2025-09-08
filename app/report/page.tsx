@@ -128,17 +128,6 @@ interface PlatformCardProps {
 }
 
 const PlatformCard = ({ platform }: PlatformCardProps) => {
-  const trendColors = {
-    up: 'text-green-600',
-    down: 'text-red-600',
-    neutral: 'text-gray-600'
-  };
-
-  const trendIcons = {
-    up: '↗',
-    down: '↘',
-    neutral: '→'
-  };
 
   const getPlatformLogo = (logo: string) => {
     switch (logo) {
@@ -231,14 +220,20 @@ const RankingItem = ({ position, name, mentionRate, isCurrentBrand = false }: Ra
 export default function ReportPage() {
   const [formData, setFormData] = useState<FormData>({
     step1: { country: '', language: '' },
-    step2: { brandName: '', website: '' },
+    step2: { 
+      name: '', 
+      company: '', 
+      email: '', 
+      position: '', 
+      brandName: '', 
+      website: '' 
+    },
     step3: { selectedThemes: [] },
     step4: { competitors: [] },
     step5: { 
-      name: '', 
-      email: '', 
       preferredDate: '', 
-      preferredTimeSlot: '' 
+      preferredTimeSlot: '',
+      referralSource: ''
     }
   });
 
@@ -367,7 +362,7 @@ export default function ReportPage() {
             <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
               <CardHeader className="pb-6">
                 <CardDescription className="text-blue-700 text-lg leading-relaxed">
-                  Summary of your brand's AI search visibility performance
+                  Summary of your brand&apos;s AI search visibility performance
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-0 pb-8 flex-1 flex flex-col justify-center">
@@ -424,7 +419,7 @@ export default function ReportPage() {
             </div>
 
             {/* Platform-specific metrics - Each taking 1 column */}
-            {platformData.map((platform, index) => (
+            {platformData.map((platform) => (
               <div key={platform.name} className="lg:col-span-1">
                 <PlatformCard platform={platform} />
               </div>

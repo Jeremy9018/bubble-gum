@@ -13,14 +13,14 @@ export default function Home() {
               Why GEO Matters for Your Brand
             </h2>
             <p className="text-lg leading-8 text-gray-600">
-              AI search engines are becoming the primary way people discover brands. Make sure you're visible.
+              AI search engines are becoming the primary way people discover brands. Make sure you&apos;re visible.
             </p>
           </div>
           
           <div className="mx-auto mt-16 max-w-5xl">
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               <div className="text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-blue-100">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-100 to-pink-100">
                   <span className="text-2xl">🔍</span>
                 </div>
                 <h3 className="mb-2 text-lg font-semibold text-gray-900">
@@ -32,7 +32,7 @@ export default function Home() {
               </div>
               
               <div className="text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-green-100">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-100 to-pink-100">
                   <span className="text-2xl">📊</span>
                 </div>
                 <h3 className="mb-2 text-lg font-semibold text-gray-900">

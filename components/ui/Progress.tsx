@@ -24,7 +24,7 @@ const Progress: React.FC<ProgressProps> = ({ currentStep, className }) => {
         </div>
         <div className="h-2 w-full rounded-full bg-gray-200">
           <div
-            className="h-2 rounded-full bg-blue-600 transition-all duration-300 ease-out"
+            className="h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
@@ -44,9 +44,9 @@ const Progress: React.FC<ProgressProps> = ({ currentStep, className }) => {
                 <div className="flex flex-col items-center">
                   <div
                     className={cn(
-                      'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all duration-200',
-                      isCompleted && 'border-blue-600 bg-blue-600 text-white',
-                      isCurrent && 'border-blue-600 bg-white text-blue-600 ring-4 ring-blue-100',
+                      'flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-all duration-300 ease-out',
+                      isCompleted && 'border-purple-500 bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/25',
+                      isCurrent && 'border-purple-500 bg-white text-purple-600 ring-4 ring-purple-100 shadow-lg',
                       isUpcoming && 'border-gray-300 bg-white text-gray-400'
                     )}
                   >
@@ -93,12 +93,15 @@ const Progress: React.FC<ProgressProps> = ({ currentStep, className }) => {
 
                 {/* Connector Line */}
                 {index < STEPS.length - 1 && (
-                  <div
-                    className={cn(
-                      'mx-4 h-0.5 w-16 transition-all duration-200 lg:w-24',
-                      stepNumber < currentStep ? 'bg-blue-600' : 'bg-gray-300'
-                    )}
-                  />
+                  <div className="relative mx-4 h-0.5 w-16 lg:w-24">
+                    <div className="absolute inset-0 bg-gray-300 rounded-full" />
+                    <div
+                      className={cn(
+                        'absolute inset-0 rounded-full transition-all duration-500 ease-out',
+                        stepNumber < currentStep ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-transparent'
+                      )}
+                    />
+                  </div>
                 )}
               </div>
             );

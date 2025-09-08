@@ -37,9 +37,42 @@ export const validateStep1 = (data: { country: string; language: string }): Vali
   return errors;
 };
 
-export const validateStep2 = (data: { brandName: string; website: string }): ValidationError[] => {
+export const validateStep2 = (data: { 
+  name: string; 
+  company: string; 
+  email: string; 
+  position: string; 
+  brandName: string; 
+  website: string; 
+}): ValidationError[] => {
   const errors: ValidationError[] = [];
   
+  // Validate personal information
+  if (!data.name.trim()) {
+    errors.push({ field: 'name', message: 'Please enter your full name' });
+  } else if (data.name.trim().length < 2) {
+    errors.push({ field: 'name', message: 'Name must be at least 2 characters' });
+  }
+  
+  if (!data.company.trim()) {
+    errors.push({ field: 'company', message: 'Please enter your company name' });
+  } else if (data.company.trim().length < 2) {
+    errors.push({ field: 'company', message: 'Company name must be at least 2 characters' });
+  }
+  
+  if (!data.email.trim()) {
+    errors.push({ field: 'email', message: 'Please enter your email address' });
+  } else if (!validateEmail(data.email)) {
+    errors.push({ field: 'email', message: 'Please enter a valid email address' });
+  }
+  
+  if (!data.position.trim()) {
+    errors.push({ field: 'position', message: 'Please enter your position' });
+  } else if (data.position.trim().length < 2) {
+    errors.push({ field: 'position', message: 'Position must be at least 2 characters' });
+  }
+  
+  // Validate brand information  
   if (!data.brandName.trim()) {
     errors.push({ field: 'brandName', message: 'Please enter your brand name' });
   } else if (data.brandName.trim().length < 2) {
@@ -55,13 +88,34 @@ export const validateStep2 = (data: { brandName: string; website: string }): Val
   return errors;
 };
 
-export const validateStep3 = (data: { selectedThemes: string[] }): ValidationError[] => {
+export const validateStep3 = (data: { 
+  selectedThemes: string[];
+  customTheme?: { name: string; description: string; };
+}): ValidationError[] => {
   const errors: ValidationError[] = [];
   
-  if (data.selectedThemes.length === 0) {
-    errors.push({ field: 'selectedThemes', message: 'Please select one theme' });
+  const hasSelectedTheme = data.selectedThemes.length > 0;
+  const hasCustomTheme = data.customTheme?.name?.trim() && data.customTheme?.description?.trim();
+  
+  if (!hasSelectedTheme && !hasCustomTheme) {
+    errors.push({ field: 'selectedThemes', message: 'Please select one theme or create a custom theme' });
+  } else if (hasSelectedTheme && hasCustomTheme) {
+    errors.push({ field: 'selectedThemes', message: 'Please select either a predefined theme or create a custom theme, not both' });
   } else if (data.selectedThemes.length > 1) {
     errors.push({ field: 'selectedThemes', message: 'Please select only one theme' });
+  }
+  
+  // Validate custom theme fields if user has started filling them
+  if (data.customTheme) {
+    if (data.customTheme.name?.trim() && !data.customTheme.description?.trim()) {
+      errors.push({ field: 'customThemeDescription', message: 'Please add a description for your custom theme' });
+    } else if (!data.customTheme.name?.trim() && data.customTheme.description?.trim()) {
+      errors.push({ field: 'customThemeName', message: 'Please add a name for your custom theme' });
+    } else if (data.customTheme.name?.trim() && data.customTheme.name.length < 3) {
+      errors.push({ field: 'customThemeName', message: 'Theme name must be at least 3 characters' });
+    } else if (data.customTheme.description?.trim() && data.customTheme.description.length < 10) {
+      errors.push({ field: 'customThemeDescription', message: 'Theme description must be at least 10 characters' });
+    }
   }
   
   return errors;
@@ -80,27 +134,11 @@ export const validateStep4 = (data: { competitors: string[] }): ValidationError[
 };
 
 export const validateStep5 = (data: { 
-  name: string; 
-  email: string; 
-  company?: string; 
-  position?: string; 
   referralSource?: string;
   preferredDate: string;
   preferredTimeSlot: string;
 }): ValidationError[] => {
   const errors: ValidationError[] = [];
-  
-  if (!data.name.trim()) {
-    errors.push({ field: 'name', message: 'Please enter your name' });
-  } else if (data.name.trim().length < 2) {
-    errors.push({ field: 'name', message: 'Name must be at least 2 characters' });
-  }
-  
-  if (!data.email.trim()) {
-    errors.push({ field: 'email', message: 'Please enter your email address' });
-  } else if (!validateEmail(data.email)) {
-    errors.push({ field: 'email', message: 'Please enter a valid email address' });
-  }
   
   if (!data.preferredDate) {
     errors.push({ field: 'preferredDate', message: 'Please select a preferred date for your meeting' });

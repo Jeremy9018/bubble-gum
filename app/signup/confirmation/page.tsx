@@ -15,8 +15,8 @@ export default function ConfirmationPage() {
     setFormData(data);
   }, []);
 
-  const selectedDate = formData.step4?.preferredDate;
-  const selectedTimeSlot = formData.step4?.preferredTimeSlot;
+  const selectedDate = formData.step5?.preferredDate;
+  const selectedTimeSlot = formData.step5?.preferredTimeSlot;
 
   const getDateLabel = (dateValue: string) => {
     const date = getAvailableDates().find(d => d.value === dateValue);
@@ -44,7 +44,7 @@ export default function ConfirmationPage() {
           🎉 Your GEO Report is Being Generated!
         </h1>
         <p className="text-lg text-gray-600 sm:text-xl">
-          Thank you for your submission. We're analyzing your brand's visibility across major AI platforms.
+          Thank you for your submission. We&apos;re analyzing your brand&apos;s visibility across major AI platforms.
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export default function ConfirmationPage() {
                   <strong>Time:</strong> {getTimeLabel(selectedTimeSlot)} (EST)
                 </p>
                 <p className="text-sm text-green-700">
-                  You'll receive a calendar invite with meeting details within the next hour. 
+                  You&apos;ll receive a calendar invite with meeting details within the next hour. 
                   Our GEO expert will walk you through your report and provide personalized recommendations.
                 </p>
               </div>
@@ -91,7 +91,7 @@ export default function ConfirmationPage() {
             <div>
               <h3 className="font-medium text-gray-900">Analysis in Progress</h3>
               <p className="text-sm text-gray-600">
-                Our AI systems are analyzing your brand's presence across ChatGPT, Claude, Gemini, and other platforms.
+                Our AI systems are analyzing your brand&apos;s presence across ChatGPT, Claude, Gemini, and other platforms.
               </p>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function ConfirmationPage() {
             <div>
               <h3 className="font-medium text-gray-900">Actionable Insights</h3>
               <p className="text-sm text-gray-600">
-                Review detailed recommendations to improve your brand's AI search visibility and rankings.
+                Review detailed recommendations to improve your brand&apos;s AI search visibility and rankings.
               </p>
             </div>
           </div>

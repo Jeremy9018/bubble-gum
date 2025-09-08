@@ -5,35 +5,35 @@ export const THEMES: Theme[] = [
     id: 'charity-organizations',
     name: '기부단체',
     description: '신뢰할 수 있는 기부 단체와 자선 기관의 평판 및 투명성',
-    icon: '🏛️',
+    icon: '',
     color: 'bg-blue-500'
   },
   {
     id: 'donation-methods',
     name: '기부방법',
     description: '다양한 기부 방식과 플랫폼의 편의성 및 접근성',
-    icon: '💳',
+    icon: '',
     color: 'bg-green-500'
   },
   {
     id: 'sponsorship',
     name: '후원',
     description: '지속적인 후원 프로그램과 장기적 지원 시스템',
-    icon: '🤝',
+    icon: '',
     color: 'bg-purple-500'
   },
   {
     id: 'international-relief',
     name: '국제구호',
     description: '전 세계 재해 구호와 국제적 인도주의 지원 활동',
-    icon: '🌍',
+    icon: '',
     color: 'bg-orange-500'
   },
   {
     id: 'child-protection',
     name: '아동보호',
     description: '아동 복지와 권리 보호를 위한 안전망 및 지원 서비스',
-    icon: '👶',
+    icon: '',
     color: 'bg-pink-500'
   }
 ];
@@ -116,7 +116,7 @@ export const TIME_SLOTS = [
 export const getAvailableDates = () => {
   const dates = [];
   const today = new Date();
-  let currentDate = new Date(today);
+  const currentDate = new Date(today);
   currentDate.setDate(today.getDate() + 1); // Start from tomorrow
   
   while (dates.length < 7) {

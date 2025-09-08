@@ -10,19 +10,19 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading = false, disabled, children, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
+    const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 transform hover:scale-[1.02] active:scale-[0.98]';
     
     const variants = {
-      primary: 'bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-600',
-      secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500',
-      outline: 'border border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 focus-visible:ring-gray-500',
-      ghost: 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-gray-500'
+      primary: 'bg-purple-900 text-white shadow-lg shadow-purple-900/25 hover:shadow-xl hover:shadow-purple-900/40 focus-visible:ring-purple-900 hover:bg-purple-800',
+      secondary: 'bg-white text-purple-900 border-2 border-purple-200 hover:border-purple-300 hover:bg-purple-50 focus-visible:ring-purple-500 shadow-sm hover:shadow-md',
+      outline: 'border-2 border-gray-300 bg-transparent text-gray-700 hover:bg-gray-50 hover:border-gray-400 focus-visible:ring-gray-500 shadow-sm hover:shadow-md',
+      ghost: 'text-purple-900 hover:bg-purple-50 hover:text-purple-700 focus-visible:ring-purple-500'
     };
     
     const sizes = {
-      sm: 'h-9 px-3 text-sm rounded-md',
-      md: 'h-10 px-4 text-sm rounded-md',
-      lg: 'h-12 px-6 text-base rounded-lg'
+      sm: 'h-9 px-4 text-sm rounded-xl',
+      md: 'h-11 px-6 text-sm rounded-xl',
+      lg: 'h-12 px-8 text-base rounded-2xl'
     };
 
     return (

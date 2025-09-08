@@ -16,7 +16,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
         className={cn(
           'rounded-lg border bg-white p-6 text-left shadow-sm transition-all duration-200',
           selectable && 'cursor-pointer hover:shadow-md',
-          selected && 'border-blue-500 bg-blue-50 shadow-md ring-2 ring-blue-500/20',
+          selected && 'border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50 shadow-md ring-2 ring-purple-500/20',
           !selected && 'border-gray-200 hover:border-gray-300',
           className
         )}

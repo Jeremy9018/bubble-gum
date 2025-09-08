@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormContext } from '@/contexts/FormContext';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Card, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { validateStep4 } from '@/lib/validations';
 import { cn } from '@/lib/utils';
@@ -94,7 +94,7 @@ export default function Step4Page() {
           Who are your main competitors?
         </h1>
         <p className="text-lg text-gray-600">
-          Select up to 5 competitors that you'd like to compare your brand against. We've suggested some similar brands to get you started.
+          Select up to 5 competitors that you&apos;d like to compare your brand against. We&apos;ve suggested some similar brands to get you started.
         </p>
       </div>
 

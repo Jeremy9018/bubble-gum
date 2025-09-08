@@ -3,6 +3,36 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* BubbleShare Design System Colors */
+  --primary-purple: #8B5CF6;
+  --secondary-pink: #EC4899;
+  --primary-gradient: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  --dark-background: #1F2937;
+  --light-background: #F8FAFC;
+  
+  /* Extended color palette */
+  --purple-50: #F3F0FF;
+  --purple-100: #E9E2FF;
+  --purple-200: #D6CCFF;
+  --purple-300: #BEADFF;
+  --purple-400: #A78BFA;
+  --purple-500: #8B5CF6;
+  --purple-600: #7C3AED;
+  --purple-700: #6D28D9;
+  --purple-800: #5B21B6;
+  --purple-900: #4C1D95;
+  
+  --pink-50: #FDF2F8;
+  --pink-100: #FCE7F3;
+  --pink-200: #FBCFE8;
+  --pink-300: #F9A8D4;
+  --pink-400: #F472B6;
+  --pink-500: #EC4899;
+  --pink-600: #DB2777;
+  --pink-700: #BE185D;
+  --pink-800: #9D174D;
+  --pink-900: #831843;
 }
 
 @theme inline {
@@ -10,6 +40,12 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom Tailwind colors for BubbleShare theme */
+  --color-primary-purple: var(--primary-purple);
+  --color-secondary-pink: var(--secondary-pink);
+  --color-dark-bg: var(--dark-background);
+  --color-light-bg: var(--light-background);
 }
 
 @media (prefers-color-scheme: dark) {
