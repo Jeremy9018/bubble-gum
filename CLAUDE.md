@@ -26,7 +26,7 @@ npm start
 npm run lint
 ```
 
-The application runs on port 3001 by default (3000 is often in use).
+The application runs on port 3002 by default (3000 and 3001 are often in use).
 
 ## Core Architecture
 
@@ -59,13 +59,14 @@ The report page uses a **freemium model** with visible free metrics and blurred 
 ## Core Architecture
 
 ### Multi-Step Form Flow
-The application is built around a 4-step signup process:
+The application is built around a 5-step signup process:
 
 1. **Step 1** (`/signup/step-1`): Country & Language selection with auto-detection
-2. **Step 2** (`/signup/step-2`): Brand name and website input with validation
+2. **Step 2** (`/signup/step-2`): Personal information (name, company, email, position) and brand details (name, website)
 3. **Step 3** (`/signup/step-3`): Single theme selection from Korean charity/humanitarian themes
-4. **Step 4** (`/signup/step-4`): Personal information + mandatory meeting scheduling
-5. **Confirmation** (`/signup/confirmation`): Success page with meeting details
+4. **Step 4** (`/signup/step-4`): Competitor analysis input
+5. **Step 5** (`/signup/step-5`): Meeting scheduling with preferred date/time slots
+6. **Confirmation** (`/signup/confirmation`): Success page with meeting details
 
 ### Form State Management
 - **Global State**: React Context (`FormProvider`) wraps the signup flow
@@ -79,14 +80,20 @@ The application is built around a 4-step signup process:
 // Main form data structure
 interface FormData {
   step1: { country: string; language: string };
-  step2: { brandName: string; website: string };
-  step3: { selectedThemes: string[]; }; // Single selection only
-  step4: { 
+  step2: { 
     name: string; 
+    company: string; 
     email: string; 
+    position: string;
+    brandName: string; 
+    website: string; 
+  };
+  step3: { selectedThemes: string[]; }; // Single selection only
+  step4: { competitors: string[]; };
+  step5: { 
     preferredDate: string; 
-    preferredTimeSlot: string; 
-    // ... optional fields
+    preferredTimeSlot: string;
+    referralSource?: string;
   };
 }
 ```
@@ -102,7 +109,7 @@ interface FormData {
 
 **Form Components** (`/contexts/` and `/hooks/`):
 - `FormProvider`: Context provider for global form state
-- `useFormData`: Custom hook managing form state and persistence
+- `useFormData`: Custom hook managing form state and localStorage persistence
 - `useFormContext`: Hook for accessing form context
 
 **Report Components** (inline in `/app/report/page.tsx`):
@@ -147,9 +154,10 @@ interface FormData {
 ### Form Validation Rules
 
 - **Step 1**: Country and language required
-- **Step 2**: Brand name (2+ chars) and valid website URL required
+- **Step 2**: All personal information fields (name, company, email, position) and brand details (brandName, website URL) required
 - **Step 3**: Exactly one theme must be selected (not 0, not 2+)
-- **Step 4**: Name, email, meeting date, and meeting time required
+- **Step 4**: Competitor list input
+- **Step 5**: Meeting date and time slot selection required
 
 ### Local Storage Integration
 
@@ -160,7 +168,7 @@ Form data automatically persists to localStorage with key `'geo-report-form-data
 - Progress bar updates automatically based on current URL path
 - Each step validates before allowing progression
 - Back navigation preserves form state
-- Step URLs: `/signup/step-{1-4}`, `/signup/confirmation`
+- Step URLs: `/signup/step-{1-5}`, `/signup/confirmation`
 
 ## Important Notes
 

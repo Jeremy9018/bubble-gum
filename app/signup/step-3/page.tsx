@@ -89,31 +89,6 @@ export default function Step3Page() {
         </p>
       </div>
 
-      {/* Selection Counter */}
-      <div className="mb-6 flex items-center justify-between rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 p-5 border-2 border-purple-100">
-        <div className="flex items-center text-sm">
-          <div className="mr-3 h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-            <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <span className="text-purple-800 font-medium">
-            {selectedThemes.length === 0 && (!customTheme.name?.trim() || !customTheme.description?.trim()) 
-              ? 'Select one theme or create a custom theme' 
-              : selectedThemes.length === 1 
-                ? <><strong>1</strong> theme selected</>
-                : customTheme.name?.trim() && customTheme.description?.trim()
-                  ? <><strong>1</strong> custom theme created</>
-                  : 'Select one theme or create a custom theme'
-            }
-          </span>
-        </div>
-        {(selectedThemes.length === 1 || (customTheme.name?.trim() && customTheme.description?.trim())) && (
-          <span className="text-xs font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 px-3 py-1.5 rounded-full shadow-sm">
-            ✓ Selected
-          </span>
-        )}
-      </div>
 
       {/* Error Message */}
       {errors.selectedThemes && (
@@ -143,20 +118,8 @@ export default function Step3Page() {
                 isSelected && 'ring-2 ring-purple-500 border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg',
                 !isSelected && 'hover:border-purple-300 hover:shadow-lg border-2'
               )}
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-end">
-                  {isSelected && (
-                    <div className="h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
-                      <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="pt-0">
+            >              
+              <CardContent className="pt-0 relative">
                 <CardTitle className={cn(
                   'mb-2 text-lg font-semibold',
                   isSelected ? 'text-purple-900' : 'text-gray-900'
@@ -169,6 +132,13 @@ export default function Step3Page() {
                 )}>
                   {theme.description}
                 </CardDescription>
+                {isSelected && (
+                  <div className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                    <svg className="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                )}
               </CardContent>
             </Card>
           );

@@ -98,23 +98,6 @@ export default function Step4Page() {
         </p>
       </div>
 
-      {/* Selection Counter */}
-      <div className="mb-6 flex items-center justify-between rounded-lg bg-blue-50 p-4">
-        <div className="flex items-center text-sm">
-          <svg className="mr-2 h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14-7l2 7-2 7m-14 0l-2-7 2-7" />
-          </svg>
-          <span className="text-blue-800">
-            <strong>{selectedCompetitors.length}</strong> of 5 competitors selected
-          </span>
-        </div>
-        {selectedCompetitors.length >= 3 && (
-          <span className="text-xs font-medium text-blue-700 bg-blue-100 px-2 py-1 rounded-full">
-            Good selection
-          </span>
-        )}
-      </div>
-
       {/* Error Message */}
       {errors.competitors && (
         <div className="mb-6 rounded-lg bg-red-50 p-4">
@@ -129,7 +112,7 @@ export default function Step4Page() {
 
       {/* Suggested Competitors */}
       <div className="mb-8">
-        <h3 className="mb-4 text-lg font-semibold text-gray-900">Suggested Competitors</h3>
+        {/* <h3 className="mb-4 text-lg font-semibold text-gray-900">Suggested Competitors</h3> */}
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {DEFAULT_COMPETITORS.map((competitor) => {
             const isSelected = selectedCompetitors.includes(competitor);
