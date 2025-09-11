@@ -2,81 +2,21 @@
 
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { FormData } from '@/lib/types';
-
-// Placeholder data for the metrics
-const brandVisibilityData = {
-  mentionRate: 78,
-  shareOfVoice: 34
-};
-
-const platformData = [
-  { name: 'Google AIO', mentionRate: 82, trend: 'up', trendValue: 'Leading platform', logo: 'google' },
-  { name: 'Naver AI Briefing', mentionRate: 75, trend: 'up', trendValue: 'Strong presence', logo: 'naver' },
-  { name: 'ChatGPT', mentionRate: 67, trend: 'neutral', trendValue: 'Growing awareness', logo: 'openai' }
-];
-
-// Platform data for line chart
-const platforms = ['Overall', 'Google', 'Naver', 'ChatGPT'];
-
-const competitorData = {
-  brandRanking: 3,
-  competitors: [
-    { 
-      name: '유니세프', 
-      mentionRates: { Overall: 85, Google: 88, Naver: 82, ChatGPT: 85 },
-      color: '#10B981', // green
-      isTarget: false
-    },
-    { 
-      name: '월드비전', 
-      mentionRates: { Overall: 78, Google: 82, Naver: 75, ChatGPT: 77 },
-      color: '#8B5CF6', // purple
-      isTarget: false
-    },
-    { 
-      name: '굿네이버스', 
-      mentionRates: { Overall: 72, Google: 75, Naver: 70, ChatGPT: 71 },
-      color: '#3B82F6', // blue (target brand)
-      isTarget: true
-    },
-    { 
-      name: '컴패션', 
-      mentionRates: { Overall: 65, Google: 68, Naver: 62, ChatGPT: 65 },
-      color: '#F59E0B', // amber
-      isTarget: false
-    },
-    { 
-      name: '세이브더칠드런', 
-      mentionRates: { Overall: 58, Google: 62, Naver: 55, ChatGPT: 57 },
-      color: '#EF4444', // red
-      isTarget: false
-    },
-    { 
-      name: '월드쉐어', 
-      mentionRates: { Overall: 45, Google: 48, Naver: 43, ChatGPT: 44 },
-      color: '#6B7280', // gray
-      isTarget: false
-    }
-  ]
-};
-
-const sourceBreakdownData = {
-  linkSources: [
-    { source: 'reddit.com', percentage: 32 },
-    { source: 'm.blog.naver.com', percentage: 24 },
-    { source: 'www.tistory.com', percentage: 18 },
-    { source: 'news.naver.com', percentage: 15 },
-    { source: 'www.instagram.com', percentage: 11 },
-    { source: 'Others', percentage: 0 }
-  ],
-  contentTypes: [
-    { type: 'Informational', percentage: 52 },
-    { type: 'Commercial', percentage: 31 },
-    { type: 'Transactional', percentage: 12 },
-    { type: 'Navigational', percentage: 5 }
-  ]
-};
+import { 
+  type FormData,
+  brandVisibilityData,
+  platformData,
+  platforms,
+  competitorData,
+  sourceBreakdownData,
+  keywordPromptPairs,
+  keyInsights,
+  getBrandName,
+  getTheme,
+  getCountry,
+  getLanguage,
+  getWebsite
+} from '@/lib/variables';
 
 interface MetricCardProps {
   title: string;
@@ -423,9 +363,6 @@ const LineChart = ({ data, platforms }: LineChartProps) => {
         >
           Mention Rate by Platform (%)
         </text>
-
-        {/* Simple test circle to verify SVG rendering */}
-        <circle cx={300} cy={200} r={8} fill="red" stroke="white" strokeWidth={2} />
       </svg>
 
       {/* Tooltip with exact percentage */}
@@ -521,6 +458,8 @@ export default function ReportPage() {
     }
   });
 
+  const [isExampleExpanded, setIsExampleExpanded] = useState(false);
+
   useEffect(() => {
     // Load form data from localStorage
     const savedData = localStorage.getItem('geo-report-form-data');
@@ -536,26 +475,93 @@ export default function ReportPage() {
   
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+      {/* Navbar */}
+      <header className="bg-white shadow-sm">
+        <div className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <h1 className="text-xl font-semibold text-gray-900">
+                BubbleShare
+              </h1>
+              <div className="ml-2 flex items-center group relative">
+                <span className="text-sm text-gray-500">
+                  GEO Report
+                </span>
+                <div className="ml-2 relative">
+                  <svg 
+                    className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors duration-200" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  
+                  {/* Tooltip content */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 top-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-50">
+                    <div className="bg-white rounded-lg shadow-2xl border border-gray-200 p-6 w-96 max-w-sm">
+                      <div className="mb-4">
+                        <h3 className="text-lg font-bold text-gray-900 mb-3">How does it work?</h3>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 gap-6">
+                        <div className="text-center">
+                          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                          </div>
+                          <h4 className="text-sm font-semibold text-gray-900 mb-2">Data Collection</h4>
+                          <p className="text-xs text-gray-600 leading-relaxed">
+                            We analyze relevant prompts across major AI platforms like Google and chatGPT.
+                          </p>
+                        </div>
+                        
+                        <div className="text-center">
+                          <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                          </div>
+                          <h4 className="text-sm font-semibold text-gray-900 mb-2">AI Analysis</h4>
+                          <p className="text-xs text-gray-600 leading-relaxed">
+                            We laverage AI to assess brand visibility and understand how your brand is perceived.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Tooltip arrow */}
+                      <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-l border-t border-gray-200 rotate-45"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="text-sm text-gray-500">
+              {getBrandName(formData)}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Report Header */}
       <div className="bg-white shadow-sm">
         <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-8 xl:px-12">
           <div className="text-center">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl xl:text-4xl">
-              굿네이버스 GEO Report - 기부방법
+              {getBrandName(formData)} GEO Report - {getTheme(formData)}
             </h1>
             <p className="mt-6 text-lg font-medium text-gray-700 tracking-wide">
-              굿네이버스 - 기부방법
+              {getBrandName(formData)} - {getTheme(formData)}
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600">
-              {formData.step1?.country && (
-                <div className="flex items-center">
-                  <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  {formData.step1.country}
-                </div>
-              )}
+              <div className="flex items-center">
+                <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {getCountry(formData)}
+              </div>
               {/* {formData.step2?.website && (
                 <div className="flex items-center">
                   <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -564,14 +570,12 @@ export default function ReportPage() {
                   {formData.step2.website}
                 </div>
               )} */}
-              {formData.step1?.language && (
-                <div className="flex items-center">
-                  <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                  </svg>
-                  {formData.step1.language.toUpperCase()}
-                </div>
-              )}
+              <div className="flex items-center">
+                <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                {getLanguage(formData).toUpperCase()}
+              </div>
               {/* {formData.step3?.selectedThemes && formData.step3.selectedThemes.length > 0 && (
                 <div className="flex items-center">
                   <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -598,81 +602,134 @@ export default function ReportPage() {
 
       {/* Main Content */}
       <div className="mx-auto max-w-screen-2xl px-6 py-12 lg:px-8 xl:px-12">
-        {/* How does it work? and Key Insights Side by Side */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-          {/* How does it work? Section */}
-          <div>
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">How does it work?</h2>
-            </div>
-            
-            <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-              <CardContent className="p-8 flex-1 flex flex-col justify-center">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Data Collection</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      We analyze relevant prompts across major AI platforms like Google and chatGPT.
-                    </p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">AI Analysis</h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      We laverage AI to assess brand visibility and understand how your brand is perceived.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+        {/* Key Insights Section */}
+        <div className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">Key Insights</h2>
           </div>
+          
+          <Card className="lg:col-span-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300">
+            <CardHeader className="pb-6">
+              <CardDescription className="text-blue-700 text-lg leading-relaxed">
+                Summary of your brand&apos;s AI search visibility performance
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-0 pb-8">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-blue-600 mb-2">{keyInsights.highestPlatform.name} ({keyInsights.highestPlatform.rate}%)</div>
+                  <div className="text-sm text-blue-700">Highest Visibility Platform</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-blue-600 mb-2">{keyInsights.lowestPlatform.name} ({keyInsights.lowestPlatform.rate}%)</div>
+                  <div className="text-sm text-blue-700">Lowest Visibility Platform</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-blue-600 mb-2">#{keyInsights.competitorRank}</div>
+                  <div className="text-sm text-blue-700">Rank Among Competitors</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-blue-600 mb-2">{keyInsights.geoScore}/10</div>
+                  <div className="text-sm text-blue-700">Technical GEO Score</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-          {/* Key Insights Section */}
-          <div>
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">Key Insights</h2>
-            </div>
-            
-            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
-              <CardHeader className="pb-6">
-                <CardDescription className="text-blue-700 text-lg leading-relaxed">
-                  Summary of your brand&apos;s AI search visibility performance
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0 pb-8 flex-1 flex flex-col justify-center">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-blue-600 mb-2">ChatGPT (67%)</div>
-                    <div className="text-sm text-blue-700">Lowest Visibility Platform</div>
+        {/* Prompt Examples Section */}
+        <div className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">Prompts</h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              We analyzed 150+ prompts related to your theme, here are some examples:
+            </p>
+          </div>
+          
+          <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300">
+            <CardContent className="p-6">
+              <div className="border-t border-gray-200 pt-6">
+                <button
+                  onClick={() => setIsExampleExpanded(!isExampleExpanded)}
+                  className="flex items-center justify-between w-full text-left hover:bg-gray-50 p-4 rounded-lg transition-colors duration-200"
+                >
+                  <div className="flex items-center">
+                    <h3 className="text-lg font-semibold text-gray-900">{keywordPromptPairs.length} Prompt examples</h3>
                   </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-blue-600 mb-2">#3</div>
-                    <div className="text-sm text-blue-700">Rank Among Competitors</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-blue-600 mb-2">8.5/10</div>
-                    <div className="text-sm text-blue-700">Technical GEO Score</div>
+                  <svg 
+                    className={`w-5 h-5 text-gray-600 transform transition-transform duration-200 ${isExampleExpanded ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Expandable Content */}
+                <div className={`overflow-hidden transition-all duration-300 ${isExampleExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className="mt-4 overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left pb-4 pt-2">
+                            <div className="flex items-center">
+                              <div className="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center mr-3">
+                                <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                                </svg>
+                              </div>
+                              <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Keywords</span>
+                            </div>
+                          </th>
+                          <th className="text-left pb-4 pt-2">
+                            <div className="flex items-center">
+                              <div className="w-6 h-6 bg-orange-100 rounded-lg flex items-center justify-center mr-3">
+                                <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                              </div>
+                              <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Prompts</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {keywordPromptPairs.map((pair, index) => (
+                          <tr 
+                            key={index}
+                            className="border-b border-gray-100 hover:bg-gray-50/50 transition-colors duration-200"
+                          >
+                            <td className="py-3 pr-6">
+                              <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-200">
+                                <span className="text-sm font-semibold text-green-700">
+                                  {pair.keyword}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="py-3 pl-6">
+                              <div className="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-200">
+                                <p className="text-sm text-gray-700 leading-relaxed">
+                                  <span className="text-orange-500 mr-2">"</span>
+                                  {pair.prompt}
+                                  <span className="text-orange-500 ml-2">"</span>
+                                </p>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Brand AI Visibility Section */}
         <div className="mb-12">
-          <div className="mb-8 mt-24">
-            
+          <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">Brand AI Visibility</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
               Overall performance metrics for your brand across AI search platforms
@@ -684,17 +741,36 @@ export default function ReportPage() {
             <div className="lg:col-span-2">
               <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 hover:scale-[1.02] h-full">
                 <CardHeader className="pb-3">
-                  <CardDescription className="text-sm font-medium text-gray-600 tracking-wide">
+                  <CardDescription className="text-sm font-medium text-gray-600 tracking-wide flex items-center">
                     Overall Mention Rate
+                    <span className="ml-2 relative group">
+                      <svg 
+                        className="w-4 h-4 text-gray-400 hover:text-gray-600 cursor-help transition-colors duration-200" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      
+                      {/* Tooltip */}
+                      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-50">
+                        <div className="bg-white rounded-lg shadow-xl border border-gray-200 p-4 w-72 max-w-sm">
+                          <div className="text-sm text-gray-700 leading-relaxed">
+                            % of prompts your brand gets mentioned out of all relevant prompts analyzed.
+                          </div>
+                          
+                          {/* Tooltip arrow */}
+                          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white border-r border-b border-gray-200 rotate-45"></div>
+                        </div>
+                      </div>
+                    </span>
                   </CardDescription>
                   <CardTitle className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">
                     {brandVisibilityData.mentionRate}%
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <p className="text-sm text-gray-600 mb-2 leading-relaxed">
-                    Mention rate is the number of times your brand get mentioned out of all relevant prompts analyzed.
-                  </p>
                   <div className="flex items-center text-sm font-medium text-green-600 transition-colors duration-200">
                   </div>
                 </CardContent>
@@ -708,7 +784,6 @@ export default function ReportPage() {
               </div>
             ))}
           </div>
-
 
         </div>
 
