@@ -14,59 +14,8 @@ import {
   getBrandName,
   getTheme,
   getCountry,
-  getLanguage,
-  getWebsite
+  getLanguage
 } from '@/lib/variables';
-
-interface MetricCardProps {
-  title: string;
-  value: string | number;
-  subtitle?: string;
-  trend?: 'up' | 'down' | 'neutral';
-  trendValue?: string;
-}
-
-const MetricCard = ({ title, value, subtitle, trend, trendValue }: MetricCardProps) => {
-  const trendColors = {
-    up: 'text-green-600',
-    down: 'text-red-600',
-    neutral: 'text-gray-600'
-  };
-
-  const trendIcons = {
-    up: '↗',
-    down: '↘',
-    neutral: '→'
-  };
-
-  return (
-    <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-      <CardHeader className="pb-3">
-        <CardDescription className="text-sm font-medium text-gray-600 tracking-wide">
-          {title}
-        </CardDescription>
-        <CardTitle className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">
-          {typeof value === 'number' ? `${value}%` : value}
-        </CardTitle>
-      </CardHeader>
-      {(subtitle || trend) && (
-        <CardContent className="pt-0">
-          {subtitle && (
-            <p className="text-sm text-gray-600 mb-2 leading-relaxed">{subtitle}</p>
-          )}
-          {trend && trendValue && (
-            <div className={`flex items-center text-sm font-medium ${trendColors[trend]} transition-colors duration-200`}>
-              <span className="mr-2 text-base">{trendIcons[trend]}</span>
-              <span>{trendValue}</span>
-            </div>
-          )}
-        </CardContent>
-      )}
-    </Card>
-  );
-};
-
-// Keep MetricCard for potential future use or other sections
 
 interface ProgressBarProps {
   label: string;
@@ -710,9 +659,9 @@ export default function ReportPage() {
                             <td className="py-3 pl-6">
                               <div className="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-200">
                                 <p className="text-sm text-gray-700 leading-relaxed">
-                                  <span className="text-orange-500 mr-2">"</span>
+                                  <span className="text-orange-500 mr-2">&ldquo;</span>
                                   {pair.prompt}
-                                  <span className="text-orange-500 ml-2">"</span>
+                                  <span className="text-orange-500 ml-2">&rdquo;</span>
                                 </p>
                               </div>
                             </td>

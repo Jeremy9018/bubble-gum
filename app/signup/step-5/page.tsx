@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormContext } from '@/contexts/FormContext';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { REFERRAL_SOURCES, TIME_SLOTS, getAvailableDates } from '@/lib/constants';
 import { validateStep5 } from '@/lib/validations';
