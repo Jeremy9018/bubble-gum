@@ -37,19 +37,29 @@ export const clearFormData = (): void => {
 
 export const getInitialFormData = (): FormData => {
   const stored = getFormData();
-  
+
+  // Handle migration from old structure where brandName and website were in step2
+  const legacyStep2 = stored.step2 as {
+    name?: string;
+    company?: string;
+    email?: string;
+    position?: string;
+    brandName?: string;
+    website?: string;
+  };
+
   return {
     step1: {
       country: stored.step1?.country || '',
       language: stored.step1?.language || '',
+      brandName: stored.step1?.brandName || legacyStep2?.brandName || '',
+      website: stored.step1?.website || legacyStep2?.website || '',
     },
     step2: {
       name: stored.step2?.name || '',
       company: stored.step2?.company || '',
       email: stored.step2?.email || '',
       position: stored.step2?.position || '',
-      brandName: stored.step2?.brandName || '',
-      website: stored.step2?.website || '',
     },
     step3: {
       selectedThemes: stored.step3?.selectedThemes || [],

@@ -87,6 +87,7 @@ const PlatformCard = ({ platform }: PlatformCardProps) => {
       case 'gemini':
         return (
           <div className="w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/gemini-logo.svg" 
               alt="Gemini" 
@@ -98,6 +99,7 @@ const PlatformCard = ({ platform }: PlatformCardProps) => {
       case 'perplexity':
         return (
           <div className="w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="/perplexity-logo.svg" 
               alt="Perplexity" 
@@ -213,7 +215,8 @@ const LineChart = ({ data, platforms }: LineChartProps) => {
           <g key={`${platform}-icon`} transform={`translate(${x - iconSize/2}, ${y})`}>
             <rect x="2" y="2" width={iconSize - 4} height={iconSize - 4} rx="6" fill="white" stroke="#E5E7EB" strokeWidth="1"/>
             <foreignObject x="4" y="4" width="24" height="24">
-              <img 
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/gemini-logo.svg" 
                 alt="Gemini" 
                 style={{ width: '24px', height: '24px', objectFit: 'cover' }}
@@ -226,7 +229,8 @@ const LineChart = ({ data, platforms }: LineChartProps) => {
           <g key={`${platform}-icon`} transform={`translate(${x - iconSize/2}, ${y})`}>
             <rect x="2" y="2" width={iconSize - 4} height={iconSize - 4} rx="6" fill="white" stroke="#E5E7EB" strokeWidth="1"/>
             <foreignObject x="4" y="4" width="24" height="24">
-              <img 
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/perplexity-logo.svg" 
                 alt="Perplexity" 
                 style={{ width: '24px', height: '24px', objectFit: 'cover' }}
