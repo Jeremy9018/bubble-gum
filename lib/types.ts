@@ -2,14 +2,14 @@ export interface FormData {
   step1: {
     country: string;
     language: string;
+    brandName: string;
+    website: string;
   };
   step2: {
     name: string;
     company: string;
     email: string;
     position: string;
-    brandName: string;
-    website: string;
   };
   step3: {
     selectedThemes: string[];

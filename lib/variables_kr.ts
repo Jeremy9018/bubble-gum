@@ -23,22 +23,22 @@ export interface FormData {
 // Default brand and form data
 export const DEFAULT_BRAND = "Samsung Galaxy Fold";
 export const DEFAULT_THEME = "Smartphones Recommendation";
-export const DEFAULT_COUNTRY = "US";
-export const DEFAULT_LANGUAGE = "EN";
+export const DEFAULT_COUNTRY = "KR";
+export const DEFAULT_LANGUAGE = "KO";
 
 // Brand visibility metrics
 export const brandVisibilityData = {
-  mentionRate: 89,
+  mentionRate: 75,
   shareOfVoice: 34
 };
 
 // Platform performance data
 export const platformData = [
   // { name: 'Google AIO', mentionRate: 88, trend: 'up', trendValue: '+5%', logo: 'google' },
-  { name: 'Gemini', mentionRate: 88, trend: 'up', trendValue: '+3%', logo: 'gemini' },
+  { name: 'Gemini', mentionRate: 73, trend: 'up', trendValue: '+3%', logo: 'gemini' },
   // { name: 'Naver AI Briefing', mentionRate: 75, trend: 'down', trendValue: '-2%', logo: 'naver' },
-  { name: 'ChatGPT', mentionRate: 91, trend: 'up', trendValue: '+7%', logo: 'openai' },
-  { name: 'Perplexity', mentionRate: 89, trend: 'up', trendValue: '+4%', logo: 'perplexity' },
+  { name: 'ChatGPT', mentionRate: 70, trend: 'up', trendValue: '+7%', logo: 'openai' },
+  { name: 'Perplexity', mentionRate: 83, trend: 'up', trendValue: '+4%', logo: 'perplexity' },
 ];
 
 // Platform names for chart
@@ -50,37 +50,37 @@ export const competitorData = {
   competitors: [
     { 
       name: 'Samsung Galaxy Fold', 
-      mentionRates: { Overall: 89, Gemini: 88, Perplexity: 89, ChatGPT: 91 },
+      mentionRates:{ Overall:75, ChatGPT:70, Gemini:73, Perplexity:83},
       color: '#3B82F6', // blue (target brand)
       isTarget: true
     },
     { 
       name: 'Apple iPhone', 
-      mentionRates: { Overall: 38, Gemini: 27, Perplexity: 41, ChatGPT: 47 },
+      mentionRates:{ Overall:35, ChatGPT:30, Gemini:36, Perplexity:39},
       color: '#8B5CF6', // purple
       isTarget: false
     },
     { 
       name: 'Google Pixel',
-      mentionRates:{ Overall:68, ChatGPT:68, Gemini:79, Perplexity:56},
+      mentionRates:{ Overall:27, ChatGPT:29, Gemini:36, Perplexity:15},
       color: '#10B981', // green
       isTarget: false
     },
     { 
       name:'Xiaomi',
-      mentionRates:{ Overall:9, ChatGPT:12, Gemini:5, Perplexity:9},
+      mentionRates:{ Overall:20, ChatGPT:18, Gemini:18, Perplexity:23},
       color: '#F59E0B', // amber
       isTarget: false
     },
     { 
       name:'OnePlus',
-      mentionRates:{ Overall:23, ChatGPT:11, Gemini:35, Perplexity:23},
+      mentionRates:{ Overall:5, ChatGPT:3, Gemini:5, Perplexity:6},
       color: '#EF4444', // red
       isTarget: false
     },
     { 
       name:'Honor',
-      mentionRates:{ Overall:13, ChatGPT:21, Gemini:2, Perplexity:17},
+      mentionRates:{ Overall:9, ChatGPT:5, Gemini:9, Perplexity:12},
       color: '#6B7280', // gray
       isTarget: false
     }
@@ -90,19 +90,18 @@ export const competitorData = {
 // Source breakdown data
 export const sourceBreakdownData = {
   linkSources: [
-    { source: 'https://www.techradar.com/', percentage: 10 },
-    { source: 'https://www.phonearena.com/	', percentage: 6 },
-    { source: 'https://www.theverge.com/	', percentage: 6 },
-    { source: 'https://www.androidcentral.com/	', percentage: 5 },
-    { source: 'https://www.tomsguide.com/', percentage: 5 },
-    // { source: 'Others', percentage: 0 }
+    { source: 'https://www.youtube.com/', percentage: 6 },
+    { source: 'https://www.ajd.co.kr/	', percentage: 4 },
+    { source: 'https://www.techradar.com/	', percentage: 3 },
+    { source: 'https://www.samsung.com/	', percentage: 3 },
+    { source: 'https://kds099.tistory.com/	', percentage: 2 }
   ],
 
   contentTypes: [
-    { type: 'Informational', percentage: 77 },
-    { type: 'Commercial', percentage: 6 },
-    { type: 'Transactional', percentage: 6 },
-    { type: 'Navigational', percentage: 11 }
+    // { type: 'Informational', percentage: 52 },
+    // { type: 'Commercial', percentage: 31 },
+    // { type: 'Transactional', percentage: 12 },
+    // { type: 'Navigational', percentage: 5 }
   ]
 };
 
@@ -110,23 +109,23 @@ export const sourceBreakdownData = {
 export const keywordPromptPairs = [
   {
     keyword: 'smartphone recommendation',
-    prompt: 'Are there any discounts available on smartphones during Black Friday?'
+    prompt: '새 폰 살 때 지금 쓰는 폰 보상판매할 수 있나요?'
   },
   {
     keyword: 'best smart phone 2025',
-    prompt: 'What are the best options for smartphones with great cameras in 2025?'
+    prompt: '2025년 기준으로 가성비 제일 좋은 스마트폰은 어떤 제품일까요?'
   },
   {
     keyword: 'smartphone recommendation',
-    prompt: 'How do Samsung Galaxy and Apple iPhones compare in terms of battery life and performance?'
+    prompt: '블랙프라이데이 때 스마트폰 할인 많이 하나요?'
   },
   {
     keyword: 'foldable smart phone',
-    prompt: 'Are foldable smartphones durable enough for everyday use?'
+    prompt: '기존 스마트폰과 비교했을 때 폴더블폰의 장단점은 어떤 게 있나요?'
   },
   {
-    keyword: 'best smart phone 2025',
-    prompt: 'Which smartphone offers the best value for money in 2025?'
+    keyword: 'smartphone recommendation',
+    prompt: '삼성 갤럭시랑 아이폰은 배터리나 성능 면에서 어떤 차이가 있나요?'
   }
 ];
 
@@ -136,8 +135,8 @@ export const examplePrompts = keywordPromptPairs.map(pair => pair.prompt);
 
 // Key insights data
 export const keyInsights = {
-  highestPlatform: { name: 'ChatGPT', rate: 91 },
-  lowestPlatform: { name: 'Gemini', rate: 88 },
+  highestPlatform: { name: 'Perplexity', rate: 83 },
+  lowestPlatform: { name: 'ChatGPT', rate: 70 },
   competitorRank: 1,
   geoScore: 8.5
 };

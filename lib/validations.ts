@@ -23,7 +23,12 @@ export const formatWebsite = (website: string): string => {
   return `https://${website}`;
 };
 
-export const validateStep1 = (data: { country: string; language: string }): ValidationError[] => {
+export const validateStep1 = (data: { 
+  country: string; 
+  language: string; 
+  brandName: string; 
+  website: string; 
+}): ValidationError[] => {
   const errors: ValidationError[] = [];
   
   if (!data.country) {
@@ -34,6 +39,18 @@ export const validateStep1 = (data: { country: string; language: string }): Vali
     errors.push({ field: 'language', message: 'Please select a language' });
   }
   
+  if (!data.brandName.trim()) {
+    errors.push({ field: 'brandName', message: 'Please enter your brand name' });
+  } else if (data.brandName.trim().length < 2) {
+    errors.push({ field: 'brandName', message: 'Brand name must be at least 2 characters' });
+  }
+  
+  if (!data.website.trim()) {
+    errors.push({ field: 'website', message: 'Please enter your website URL' });
+  } else if (!validateWebsite(data.website)) {
+    errors.push({ field: 'website', message: 'Please enter a valid website URL (e.g., example.com)' });
+  }
+  
   return errors;
 };
 
@@ -42,8 +59,6 @@ export const validateStep2 = (data: {
   company: string; 
   email: string; 
   position: string; 
-  brandName: string; 
-  website: string; 
 }): ValidationError[] => {
   const errors: ValidationError[] = [];
   
@@ -70,19 +85,6 @@ export const validateStep2 = (data: {
     errors.push({ field: 'position', message: 'Please enter your position' });
   } else if (data.position.trim().length < 2) {
     errors.push({ field: 'position', message: 'Position must be at least 2 characters' });
-  }
-  
-  // Validate brand information  
-  if (!data.brandName.trim()) {
-    errors.push({ field: 'brandName', message: 'Please enter your brand name' });
-  } else if (data.brandName.trim().length < 2) {
-    errors.push({ field: 'brandName', message: 'Brand name must be at least 2 characters' });
-  }
-  
-  if (!data.website.trim()) {
-    errors.push({ field: 'website', message: 'Please enter your website URL' });
-  } else if (!validateWebsite(data.website)) {
-    errors.push({ field: 'website', message: 'Please enter a valid website URL (e.g., example.com)' });
   }
   
   return errors;

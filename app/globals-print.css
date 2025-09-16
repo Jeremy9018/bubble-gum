@@ -1,0 +1,481 @@
+/* Print-specific styles for the GEO Report */
+@media print {
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 0.4in;
+    border-top: 2px solid #e5e7eb;
+    padding-top: 0.25in;
+  }
+
+  /* Add top border to each new page */
+  @page:first {
+    border-top: None;
+    padding-top: 0;
+  }
+
+  /* Remove shadows and transitions but preserve colors and backgrounds */
+  * {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Remove hover effects and transitions but preserve colors */
+  [class*="hover:"],
+  [class*="transition"],
+  [class*="duration"] {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Card styling for print - preserve background colors but remove shadows */
+  [class*="shadow"] {
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  /* Preserve background gradients but ensure readability */
+  [class*="bg-gradient-to-r"] {
+    background: #f0f9ff !important; /* Light blue background instead of gradient */
+    border: 1px solid #bfdbfe !important;
+  }
+
+  /* Preserve blue-themed colors for the key insights section */
+  [class*="from-blue-50"] {
+    background: #f0f9ff !important;
+  }
+
+  /* Preserve platform card colors */
+  .platform-card {
+    background: white !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  /* Typography adjustments - more conservative sizing */
+  h1 { font-size: 18pt !important; line-height: 1.2 !important; }
+  h2 { font-size: 14pt !important; line-height: 1.3 !important; }
+  h3 { font-size: 12pt !important; line-height: 1.3 !important; }
+  h4 { font-size: 11pt !important; line-height: 1.3 !important; }
+  p, div { font-size: 9pt !important; line-height: 1.4 !important; }
+  
+  /* Specific typography for cards */
+  [class*="text-3xl"] { font-size: 16pt !important; }
+  [class*="text-2xl"] { font-size: 14pt !important; }
+  [class*="text-xl"] { font-size: 12pt !important; }
+  [class*="text-lg"] { font-size: 10pt !important; }
+  [class*="text-sm"] { font-size: 8pt !important; }
+  [class*="text-xs"] { font-size: 7pt !important; }
+
+  /* Preserve progress bar colors but make them print-friendly */
+  [class*="bg-blue-600"] { background: #2563eb !important; }
+  [class*="bg-green-600"] { background: #16a34a !important; }
+  [class*="bg-purple-600"] { background: #9333ea !important; }
+  [class*="bg-orange-600"] { background: #ea580c !important; }
+  [class*="bg-gray-600"] { background: #4b5563 !important; }
+  [class*="bg-indigo-600"] { background: #4f46e5 !important; }
+  [class*="bg-teal-600"] { background: #0d9488 !important; }
+  [class*="bg-pink-600"] { background: #db2777 !important; }
+  [class*="bg-amber-600"] { background: #d97706 !important; }
+
+  /* Progress bar background colors */
+  [class*="bg-gray-200"] { background: #e5e7eb !important; }
+
+  /* Preserve text colors */
+  [class*="text-blue-600"] { color: #2563eb !important; }
+  [class*="text-blue-700"] { color: #1d4ed8 !important; }
+  [class*="text-blue-900"] { color: #1e3a8a !important; }
+  [class*="text-gray-900"] { color: #111827 !important; }
+  [class*="text-gray-700"] { color: #374151 !important; }
+  [class*="text-gray-600"] { color: #4b5563 !important; }
+  [class*="text-gray-500"] { color: #6b7280 !important; }
+  [class*="text-green-600"] { color: #16a34a !important; }
+  [class*="text-green-700"] { color: #15803d !important; }
+
+  /* SVG chart optimization */
+  svg {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Spacing adjustments - more conservative */
+  [class*="mb-16"] { margin-bottom: 1.5rem !important; }
+  [class*="mb-12"] { margin-bottom: 1.2rem !important; }
+  [class*="mb-8"] { margin-bottom: 1rem !important; }
+  [class*="mb-6"] { margin-bottom: 0.75rem !important; }
+  [class*="mb-4"] { margin-bottom: 0.5rem !important; }
+  [class*="mb-3"] { margin-bottom: 0.375rem !important; }
+  [class*="mb-2"] { margin-bottom: 0.25rem !important; }
+
+  /* Padding adjustments */
+  [class*="py-12"] { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+  [class*="py-8"] { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+  [class*="py-6"] { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+  [class*="py-4"] { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+  [class*="px-6"] { padding-left: 1rem !important; padding-right: 1rem !important; }
+  [class*="px-8"] { padding-left: 1.2rem !important; padding-right: 1.2rem !important; }
+  [class*="px-12"] { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+
+  /* Card padding adjustments for print */
+  [class*="p-6"] { padding: 0.75rem !important; }
+  [class*="p-4"] { padding: 0.5rem !important; }
+  [class*="p-3"] { padding: 0.375rem !important; }
+
+  /* Hide interactive elements */
+  button,
+  [class*="cursor-pointer"],
+  [class*="cursor-help"] {
+    display: none !important;
+  }
+
+  /* Hide tooltips and hover content */
+  [class*="tooltip"],
+  [class*="group-hover:"],
+  [class*="opacity-0"]:not([class*="print:"]) {
+    display: none !important;
+  }
+
+  /* Ensure all content is visible */
+  [class*="max-h-0"] {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  [class*="opacity-0"][class*="print:"] {
+    opacity: 1 !important;
+  }
+
+  /* Preserve grid layouts that are important */
+  .key-insights-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .brand-visibility-grid {
+    display: grid !important;
+    grid-template-columns: 2fr 1fr 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .competitor-analysis-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 2fr !important;
+    gap: 1rem !important;
+  }
+
+  .source-breakdown-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Chart sizing for print */
+  svg[viewBox] {
+    width: 100% !important;
+    max-height: 280px !important;
+  }
+
+  /* Progress bar styling for print - preserve height */
+  [class*="h-3"] {
+    height: 8px !important;
+  }
+
+  /* Fix progress bars in source breakdown section */
+  .source-breakdown-section .space-y-3 > div {
+    margin-bottom: 0.75rem !important;
+    break-inside: avoid !important;
+  }
+
+  /* Ensure progress bar container displays properly */
+  .source-breakdown-section .mb-4 {
+    margin-bottom: 0.75rem !important;
+    break-inside: avoid !important;
+  }
+
+  /* Progress bar text and percentage display */
+  .source-breakdown-section .flex.justify-between {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* Ensure progress bar background is visible */
+  .source-breakdown-section .bg-gray-200 {
+    background: #e5e7eb !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  /* Make sure progress bar fill is visible with colors */
+  .source-breakdown-section [class*="bg-blue-600"] {
+    background: #2563eb !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-green-600"] {
+    background: #16a34a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-purple-600"] {
+    background: #9333ea !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-orange-600"] {
+    background: #ea580c !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-gray-600"] {
+    background: #4b5563 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-indigo-600"] {
+    background: #4f46e5 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-teal-600"] {
+    background: #0d9488 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-pink-600"] {
+    background: #db2777 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .source-breakdown-section [class*="bg-amber-600"] {
+    background: #d97706 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Icon sizing for print */
+  svg.w-4,
+  svg.w-5,
+  svg.h-4,
+  svg.h-5,
+  [class*="w-4"]:not([class*="w-40"]):not([class*="w-48"]),
+  [class*="h-4"]:not([class*="h-40"]):not([class*="h-48"]),
+  [class*="w-5"]:not([class*="w-50"]):not([class*="w-52"]),
+  [class*="h-5"]:not([class*="h-50"]):not([class*="h-52"]) {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  /* Platform logos and brand icons */
+  [class*="w-6"],
+  [class*="h-6"],
+  [class*="w-7"],
+  [class*="h-7"],
+  [class*="w-8"],
+  [class*="h-8"] {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Header spacing reduction and layout fixes */
+  header {
+    padding: 0.25rem 0 !important;
+    min-height: auto !important;
+  }
+
+  header .mx-auto {
+    padding: 0.25rem 1rem !important;
+  }
+
+  /* Fix header layout for print - maintain horizontal layout */
+  header .flex.items-center.justify-between {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+
+  /* Hide the right side elements in header for print */
+  header .flex.items-center.gap-4 {
+    display: none !important;
+  }
+
+  /* Ensure header left side displays as horizontal flex */
+  header .flex.items-center:first-child {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Ensure BubbleShare title displays inline */
+  header h1 {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+  }
+
+  /* Fix the GEO Report text positioning - keep it inline */
+  header .ml-2 {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-left: 0.5rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Ensure nested flex in header displays properly */
+  header .ml-2 .flex {
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  /* Hide all tooltip and absolute positioned elements */
+  header .absolute,
+  header .opacity-0,
+  header .pointer-events-none {
+    display: none !important;
+  }
+
+  /* Hide group hover elements */
+  header .group:hover .opacity-100 {
+    display: none !important;
+  }
+
+  /* Ensure no line breaks in header */
+  header * {
+    white-space: nowrap !important;
+  }
+
+  /* Force page breaks for major sections */
+  .key-insights-section,
+  .brand-visibility-section,
+  .competitor-analysis-section,
+  .source-breakdown-section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Add page break before major sections if needed */
+  .brand-visibility-section,
+  .competitor-analysis-section,
+  .source-breakdown-section {
+    page-break-before: auto !important;
+  }
+
+  /* Ensure consistent top spacing on new pages */
+  .brand-visibility-section:first-child,
+  .competitor-analysis-section:first-child,
+  .source-breakdown-section:first-child {
+    margin-top: 0.5in !important;
+  }
+
+  /* Cards should not break */
+  [class*="Card"],
+  [class*="card"],
+  .card {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Competitor ranking items */
+  .ranking-item {
+    break-inside: avoid !important;
+  }
+
+  /* Preserve chart legend colors */
+  [class*="bg-"]:not([class*="bg-white"]):not([class*="bg-gray-"]) {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure colored elements print in color */
+  .progress-bar,
+  .chart-element,
+  [class*="bg-blue"],
+  [class*="bg-green"],
+  [class*="bg-purple"],
+  [class*="bg-orange"],
+  [class*="bg-indigo"],
+  [class*="bg-teal"],
+  [class*="bg-pink"],
+  [class*="bg-amber"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Table styling */
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th, td {
+    border: 1px solid #e5e7eb !important;
+    padding: 0.375rem !important;
+  }
+
+  /* Preserve colored backgrounds in tables */
+  [class*="bg-green-50"] {
+    background: #f0fdf4 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  [class*="bg-orange-50"] {
+    background: #fff7ed !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  [class*="border-green-200"] {
+    border-color: #bbf7d0 !important;
+  }
+
+  [class*="border-orange-200"] {
+    border-color: #fed7aa !important;
+  }
+
+  /* Remove min-height constraints that might cause layout issues */
+  [class*="min-h-screen"] {
+    min-height: auto !important;
+  }
+
+  /* Compact ranking display */
+  .ranking-item {
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* Chart text sizing */
+  svg text {
+    font-size: 8pt !important;
+  }
+
+  /* Background color preservation for specific elements */
+  .bg-blue-50 {
+    background: #eff6ff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .bg-gray-50 {
+    background: #f9fafb !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Competitive ranking color preservation */
+  [class*="ring-2"],
+  [class*="ring-blue"] {
+    box-shadow: 0 0 0 2px #3b82f6 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

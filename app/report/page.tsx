@@ -83,13 +83,35 @@ const PlatformCard = ({ platform }: PlatformCardProps) => {
             </svg>
           </div>
         );
+      case 'Gemini':
+      case 'gemini':
+        return (
+          <div className="w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm overflow-hidden">
+            <img 
+              src="/gemini-logo.svg" 
+              alt="Gemini" 
+              className="w-7 h-7 object-cover" 
+            />
+          </div>
+        );
+      case 'Perplexity':
+      case 'perplexity':
+        return (
+          <div className="w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm overflow-hidden">
+            <img 
+              src="/perplexity-logo.svg" 
+              alt="Perplexity" 
+              className="w-7 h-7 object-cover" 
+            />
+          </div>
+        );
       default:
         return null;
     }
   };
 
   return (
-    <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+    <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 hover:scale-[1.02] print:shadow-none print:border print:border-gray-300 print:transform-none">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between mb-2">
           {getPlatformLogo(platform.logo)}
@@ -184,6 +206,32 @@ const LineChart = ({ data, platforms }: LineChartProps) => {
             <svg x="8" y="8" width="16" height="16" viewBox="0 0 24 24" className="fill-white">
               <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/>
             </svg>
+          </g>
+        );
+      case 'Gemini':
+        return (
+          <g key={`${platform}-icon`} transform={`translate(${x - iconSize/2}, ${y})`}>
+            <rect x="2" y="2" width={iconSize - 4} height={iconSize - 4} rx="6" fill="white" stroke="#E5E7EB" strokeWidth="1"/>
+            <foreignObject x="4" y="4" width="24" height="24">
+              <img 
+                src="/gemini-logo.svg" 
+                alt="Gemini" 
+                style={{ width: '24px', height: '24px', objectFit: 'cover' }}
+              />
+            </foreignObject>
+          </g>
+        );
+      case 'Perplexity':
+        return (
+          <g key={`${platform}-icon`} transform={`translate(${x - iconSize/2}, ${y})`}>
+            <rect x="2" y="2" width={iconSize - 4} height={iconSize - 4} rx="6" fill="white" stroke="#E5E7EB" strokeWidth="1"/>
+            <foreignObject x="4" y="4" width="24" height="24">
+              <img 
+                src="/perplexity-logo.svg" 
+                alt="Perplexity" 
+                style={{ width: '24px', height: '24px', objectFit: 'cover' }}
+              />
+            </foreignObject>
           </g>
         );
       default:
@@ -317,7 +365,7 @@ const LineChart = ({ data, platforms }: LineChartProps) => {
       {/* Tooltip with exact percentage */}
       {hoveredPoint && (
         <div 
-          className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-xl p-3 pointer-events-none transform -translate-x-1/2 -translate-y-full"
+          className="fixed z-50 bg-white border border-gray-200 rounded-lg shadow-xl p-3 pointer-events-none transform -translate-x-1/2 -translate-y-full print:hidden"
           style={{ 
             left: tooltipPosition.x, 
             top: tooltipPosition.y - 15,
@@ -415,7 +463,13 @@ export default function ReportPage() {
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
-        setFormData(parsedData);
+        // Check if saved data contains old brand name and reset if needed
+        if (parsedData.step2?.brandName === '굿네이버스') {
+          localStorage.removeItem('geo-report-form-data');
+          console.log('Cleared old form data with legacy brand name');
+        } else {
+          setFormData(parsedData);
+        }
       } catch (error) {
         console.warn('Failed to parse saved form data:', error);
       }
@@ -423,9 +477,9 @@ export default function ReportPage() {
   }, []);
   
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 print:bg-white print:text-black">
       {/* Navbar */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white shadow-sm print:shadow-none print:border-b print:border-gray-300">
         <div className="mx-auto max-w-7xl px-6 py-4 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
@@ -447,7 +501,7 @@ export default function ReportPage() {
                   </svg>
                   
                   {/* Tooltip content */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 top-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-50">
+                  <div className="absolute left-1/2 transform -translate-x-1/2 top-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-50 print:hidden">
                     <div className="bg-white rounded-lg shadow-2xl border border-gray-200 p-6 w-96 max-w-sm">
                       <div className="mb-4">
                         <h3 className="text-lg font-bold text-gray-900 mb-3">How does it work?</h3>
@@ -486,15 +540,26 @@ export default function ReportPage() {
                 </div>
               </div>
             </div>
-            <div className="text-sm text-gray-500">
-              {getBrandName(formData)}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => window.print()}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 print:hidden flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Print Report
+              </button>
+              <div className="text-sm text-gray-500">
+                {getBrandName(formData)}
+              </div>
             </div>
           </div>
         </div>
       </header>
 
       {/* Report Header */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-white shadow-sm print:shadow-none print:border-b print:border-gray-300 print:break-after-avoid">
         <div className="mx-auto max-w-screen-2xl px-6 py-8 lg:px-8 xl:px-12">
           <div className="text-center">
             <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl xl:text-4xl">
@@ -516,7 +581,7 @@ export default function ReportPage() {
                   <svg className="mr-2 h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9v-9m0-9v9" />
                   </svg>
-                  {formData.step2.website}
+                  {formData.step1.website}
                 </div>
               )} */}
               <div className="flex items-center">
@@ -550,21 +615,21 @@ export default function ReportPage() {
       </div>
 
       {/* Main Content */}
-      <div className="mx-auto max-w-screen-2xl px-6 py-12 lg:px-8 xl:px-12">
+      <div className="mx-auto max-w-screen-2xl px-6 py-12 lg:px-8 xl:px-12 print:px-4 print:py-8">
         {/* Key Insights Section */}
-        <div className="mb-16">
+        <div className="mb-16 print:mb-8 print:break-inside-avoid key-insights-section">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight">Key Insights</h2>
           </div>
           
-          <Card className="lg:col-span-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300">
+          <Card className="lg:col-span-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 shadow-xl hover:shadow-2xl transition-all duration-300 print:shadow-none print:border print:border-gray-300 print:bg-white">
             <CardHeader className="pb-6">
               <CardDescription className="text-blue-700 text-lg leading-relaxed">
                 Summary of your brand&apos;s AI search visibility performance
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-0 pb-8">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 key-insights-grid">
                 <div className="text-center">
                   <div className="text-xl font-bold text-blue-600 mb-2">{keyInsights.highestPlatform.name} ({keyInsights.highestPlatform.rate}%)</div>
                   <div className="text-sm text-blue-700">Highest Visibility Platform</div>
@@ -616,7 +681,7 @@ export default function ReportPage() {
                 </button>
 
                 {/* Expandable Content */}
-                <div className={`overflow-hidden transition-all duration-300 ${isExampleExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className={`overflow-hidden transition-all duration-300 ${isExampleExpanded ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'} print:max-h-none print:opacity-100 print:overflow-visible`}>
                   <div className="mt-4 overflow-x-auto">
                     <table className="w-full border-collapse">
                       <thead>
@@ -677,7 +742,7 @@ export default function ReportPage() {
         </div>
 
         {/* Brand AI Visibility Section */}
-        <div className="mb-12">
+        <div className="mb-12 brand-visibility-section">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">Brand AI Visibility</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -685,12 +750,12 @@ export default function ReportPage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-8 print:grid-cols-2 print:gap-4 brand-visibility-grid">
             {/* Overall Mention Rate - Larger widget taking 2 columns */}
             <div className="lg:col-span-2">
-              <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 hover:scale-[1.02] h-full">
+              <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 hover:scale-[1.02] h-full print:shadow-none print:border print:border-gray-300 print:transform-none">
                 <CardHeader className="pb-3">
-                  <CardDescription className="text-sm font-medium text-gray-600 tracking-wide flex items-center">
+                  <div className="text-sm font-medium text-gray-600 tracking-wide flex items-center">
                     Overall Mention Rate
                     <span className="ml-2 relative group">
                       <svg 
@@ -703,7 +768,7 @@ export default function ReportPage() {
                       </svg>
                       
                       {/* Tooltip */}
-                      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-50">
+                      <div className="absolute left-1/2 transform -translate-x-1/2 bottom-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto z-50 print:hidden">
                         <div className="bg-white rounded-lg shadow-xl border border-gray-200 p-4 w-72 max-w-sm">
                           <div className="text-sm text-gray-700 leading-relaxed">
                             % of prompts your brand gets mentioned out of all relevant prompts analyzed.
@@ -714,7 +779,7 @@ export default function ReportPage() {
                         </div>
                       </div>
                     </span>
-                  </CardDescription>
+                  </div>
                   <CardTitle className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">
                     {brandVisibilityData.mentionRate}%
                   </CardTitle>
@@ -737,7 +802,7 @@ export default function ReportPage() {
         </div>
 
         {/* Competitor Analysis Section */}
-        <div className="mb-12">
+        <div className="mb-12 competitor-analysis-section">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">Competitor Analysis</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -745,7 +810,7 @@ export default function ReportPage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 competitor-analysis-grid">
             {/* Ranking List - Left Column */}
             <div className="lg:col-span-1">
               <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300 h-full">
@@ -776,7 +841,7 @@ export default function ReportPage() {
         </div>
 
         {/* Mentioned Source Breakdown Section */}
-        <div className="mb-12">
+        <div className="mb-12 source-breakdown-section">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-3 tracking-tight">Mentioned Source Breakdown</h2>
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -784,7 +849,7 @@ export default function ReportPage() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3 source-breakdown-grid">
             <Card className="shadow-lg border-0 bg-white hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle className="text-lg font-bold text-gray-900 tracking-tight">Link Source Breakdown</CardTitle>

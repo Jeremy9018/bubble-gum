@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useFormContext } from '@/contexts/FormContext';
 import { Button } from '@/components/ui/Button';
@@ -14,10 +14,20 @@ export default function Step3Page() {
   const router = useRouter();
   const { formData, updateFormData } = useFormContext();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isLoading, setIsLoading] = useState(true);
   
   const step3Data = formData.step3;
   const selectedThemes = step3Data.selectedThemes || [];
   const customTheme = step3Data.customTheme || { name: '', description: '' };
+
+  // Hide loading widget after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleThemeSelect = (themeId: string) => {
     let newSelectedThemes: string[];
@@ -77,6 +87,49 @@ export default function Step3Page() {
     router.push('/signup/step-4');
   };
 
+
+  // Loading widget component
+  if (isLoading) {
+    return (
+      <div className="mx-auto max-w-4xl">
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="text-center">
+            <div className="mb-6">
+              <div className="relative mx-auto w-20 h-20">
+                {/* Outer spinning ring */}
+                <div className="absolute inset-0 rounded-full border-4 border-purple-200"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
+                
+                {/* Inner pulsing circle */}
+                <div className="absolute inset-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse opacity-80"></div>
+                
+                {/* Center icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            
+            <h2 className="text-2xl font-bold text-purple-900 mb-3">
+              Analyzing your brand...
+            </h2>
+            <p className="text-lg text-gray-600 mb-4">
+              We&apos;re generating personalized theme suggestions based on your brand information.
+            </p>
+            
+            {/* Progress dots */}
+            <div className="flex justify-center space-x-2">
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+              <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-4xl">
