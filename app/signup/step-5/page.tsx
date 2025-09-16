@@ -98,7 +98,7 @@ export default function Step5Page() {
         <div>
           <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-900 mb-2">
-              How did you hear about us? (optional)
+              How did you hear about us?
             </h3>
             <p className="text-sm text-gray-600">
               This helps us understand how to better reach businesses like yours.
@@ -124,7 +124,7 @@ export default function Step5Page() {
               Schedule Your Results Review Meeting
             </h3>
             <p className="text-sm text-gray-600">
-              Schedule a 30-minute results review session with our GEO expert.
+              Schedule a 30-minute review session with our GEO expert.
             </p>
           </div>
 

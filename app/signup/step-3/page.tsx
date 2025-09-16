@@ -138,7 +138,7 @@ export default function Step3Page() {
           What aspect matters most to your brand?
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Choose one theme to focus your GEO analysis. This helps us provide more targeted insights.
+          Choose one theme for your GEO analysis, where your brand's visability will be measured.
         </p>
       </div>
 
