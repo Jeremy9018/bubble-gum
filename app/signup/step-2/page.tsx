@@ -75,17 +75,17 @@ export default function Step2Page() {
     router.push('/signup/step-3');
   };
 
-  const isValid = step2Data.name.trim().length >= 2 &&
-                 step2Data.company.trim().length >= 2 &&
-                 step2Data.email.trim().length > 0 &&
-                 step2Data.position.trim().length > 0 &&
+  const isValid = (step2Data.name || '').trim().length >= 2 &&
+                 (step2Data.company || '').trim().length >= 2 &&
+                 (step2Data.email || '').trim().length > 0 &&
+                 (step2Data.position || '').trim().length > 0 &&
                  Object.keys(errors).length === 0;
 
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-8 text-center">
         <h1 className="mb-4 text-3xl font-bold text-purple-900">
-          We are generarting suggestions for you!
+          We are generating suggestions for you!
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
           In the meantime help us know a bit about yourself, so we can tailor the experience.
