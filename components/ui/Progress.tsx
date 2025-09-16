@@ -50,7 +50,7 @@ const Progress: React.FC<ProgressProps> = ({ currentStep, className }) => {
                       isUpcoming && 'border-gray-300 bg-white text-gray-400'
                     )}
                   >
-                    {isCompleted ? (
+                    {isCompleted && (
                       <svg
                         className="h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +65,6 @@ const Progress: React.FC<ProgressProps> = ({ currentStep, className }) => {
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                    ) : (
-                      stepNumber
                     )}
                   </div>
                   <div className="mt-2 text-center">
